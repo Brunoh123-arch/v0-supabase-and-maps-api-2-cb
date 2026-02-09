@@ -1,6 +1,7 @@
 import React from "react"
 import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
+import { DatabaseSetupChecker } from '@/components/database-setup-checker'
 
 import './globals.css'
 
@@ -40,7 +41,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className={inter.variable}>
-      <body className="font-sans antialiased overflow-hidden h-dvh">{children}</body>
+      <body className="font-sans antialiased overflow-hidden h-dvh">
+        <DatabaseSetupChecker />
+        {children}
+      </body>
     </html>
   )
 }
