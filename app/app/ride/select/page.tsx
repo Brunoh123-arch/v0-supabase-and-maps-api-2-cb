@@ -283,40 +283,7 @@ export default function RideSelectPage() {
           </div>
         </div>
 
-        {/* Botao expandir/colapsar mapa */}
-        <button
-          type="button"
-          onClick={() => setMapExpanded(!mapExpanded)}
-          className="absolute bottom-3 right-3 z-10 w-9 h-9 bg-white/95 backdrop-blur-xl rounded-full shadow-[0_1px_6px_rgba(0,0,0,0.1)] flex items-center justify-center active:scale-95 transition-transform"
-        >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className={`text-neutral-700 transition-transform duration-300 ${mapExpanded ? 'rotate-180' : ''}`}
-          >
-            {mapExpanded ? (
-              <>
-                <polyline points="4 14 10 14 10 20" />
-                <polyline points="20 10 14 10 14 4" />
-                <line x1="14" y1="10" x2="21" y2="3" />
-                <line x1="3" y1="21" x2="10" y2="14" />
-              </>
-            ) : (
-              <>
-                <polyline points="15 3 21 3 21 9" />
-                <polyline points="9 21 3 21 3 15" />
-                <line x1="21" y1="3" x2="14" y2="10" />
-                <line x1="3" y1="21" x2="10" y2="14" />
-              </>
-            )}
-          </svg>
-        </button>
+
       </div>
 
       {/* Conteudo principal - cards de veiculo com scroll infinito */}
