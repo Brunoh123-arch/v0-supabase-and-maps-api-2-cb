@@ -288,7 +288,7 @@ export default function RideSelectPage() {
 
       {/* Conteudo principal - cards de veiculo com scroll infinito */}
       <div 
-        className="flex-1 flex flex-col min-h-0 bg-white rounded-t-[24px] -mt-4 relative z-10 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] transition-all duration-300"
+        className="flex-1 flex flex-col min-h-0 bg-white rounded-t-[24px] -mt-4 relative z-10 shadow-[0_-4px_20px_rgba(0,0,0,0.06)]"
       >
         {/* Handle iOS-style - DRAGGABLE */}
         <div 
