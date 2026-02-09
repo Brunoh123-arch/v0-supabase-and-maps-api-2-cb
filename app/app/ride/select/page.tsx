@@ -212,10 +212,11 @@ export default function RideSelectPage() {
   }
 
   return (
-    <div className="h-dvh bg-neutral-50 relative overflow-hidden">
-      {/* Mapa - ocupa a tela toda e fica fixo */}
-      <div className="absolute inset-0">
-        <div className="w-full h-full bg-neutral-200">
+    <div className="h-dvh bg-neutral-50 flex flex-col overflow-hidden">
+      {/* Header - Mapa pequeno com overlay de info */}
+      <div className={`relative flex-shrink-0 transition-all duration-500 ease-out ${mapExpanded ? 'h-[55dvh]' : 'h-[28dvh]'}`}>
+        {/* Mapa compacto */}
+        <div className="absolute inset-0 bg-neutral-200">
           {route.pickupCoords && route.destinationCoords ? (
             <RouteMap
               origin={route.pickupCoords}
@@ -235,10 +236,9 @@ export default function RideSelectPage() {
             </div>
           )}
         </div>
-      </div>
 
-      {/* Top bar - back + route info */}
-      <div className="absolute top-0 left-0 right-0 z-20 pt-safe-offset-2 px-3 pb-2">
+        {/* Top bar - back + route info */}
+        <div className="absolute top-0 left-0 right-0 z-10 pt-safe-offset-2 px-3 pb-2">
           <div className="flex items-center gap-2">
             <button
               type="button"
@@ -282,13 +282,16 @@ export default function RideSelectPage() {
             </div>
           </div>
         </div>
+
+
       </div>
 
-      {/* Bottom sheet - painel de cards como overlay */}
+      {/* Conteudo principal - cards de veiculo com scroll infinito */}
       <div 
-        className={`absolute left-0 right-0 bottom-0 z-20 flex flex-col bg-white rounded-t-[24px] shadow-[0_-4px_20px_rgba(0,0,0,0.12)] transition-all duration-500 ease-out ${
-          mapExpanded ? 'max-h-[45dvh]' : 'max-h-[72dvh]'
-        }`}
+        className="flex-1 flex flex-col min-h-0 bg-white rounded-t-[24px] -mt-4 relative z-10 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] transition-transform"
+        style={{
+          transform: isDragging ? `translateY(${Math.max(0, dragOffset)}px)` : 'none',
+        }}
       >
         {/* Handle iOS-style - DRAGGABLE */}
         <div 
