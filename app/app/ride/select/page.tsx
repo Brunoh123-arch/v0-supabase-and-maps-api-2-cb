@@ -293,9 +293,9 @@ export default function RideSelectPage() {
           transform: isDragging ? `translateY(${Math.max(0, dragOffset)}px)` : 'none',
         }}
       >
-        {/* Handle decorativo - DRAGGABLE */}
+        {/* Handle iOS-style - DRAGGABLE */}
         <div 
-          className="flex justify-center pt-2.5 pb-1 cursor-grab active:cursor-grabbing"
+          className="flex justify-center pt-3 pb-2 cursor-grab active:cursor-grabbing touch-none"
           onTouchStart={(e) => handleDragStart(e.touches[0].clientY)}
           onTouchMove={(e) => handleDragMove(e.touches[0].clientY)}
           onTouchEnd={handleDragEnd}
@@ -304,7 +304,7 @@ export default function RideSelectPage() {
           onMouseUp={handleDragEnd}
           onMouseLeave={handleDragEnd}
         >
-          <div className={`w-9 h-1 rounded-full transition-colors ${isDragging ? 'bg-neutral-400' : 'bg-neutral-200'}`} />
+          <div className={`w-10 h-[5px] rounded-full transition-all duration-200 ${isDragging ? 'bg-neutral-400/90 scale-110' : 'bg-neutral-300/80'}`} />
         </div>
 
         {/* Titulo da secao */}
