@@ -72,7 +72,7 @@ export default function RideSelectPage() {
   const [loadingDistance, setLoadingDistance] = useState(true)
 
   // Map expand state
-  const [mapExpanded, setMapExpanded] = useState(false)
+  const [mapExpanded, setMapExpanded] = useState(true)
   const recenterMapRef = useRef<(() => void) | null>(null)
 
   // Bottom sheet drag state
