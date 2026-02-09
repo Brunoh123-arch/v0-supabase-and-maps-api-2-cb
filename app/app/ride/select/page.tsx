@@ -75,6 +75,12 @@ export default function RideSelectPage() {
   const [mapExpanded, setMapExpanded] = useState(false)
   const recenterMapRef = useRef<(() => void) | null>(null)
 
+  // Bottom sheet drag state
+  const [isDragging, setIsDragging] = useState(false)
+  const [dragStartY, setDragStartY] = useState(0)
+  const [dragCurrentY, setDragCurrentY] = useState(0)
+  const dragOffset = isDragging ? dragCurrentY - dragStartY : 0
+
   useEffect(() => {
     const saved = sessionStorage.getItem('rideRoute')
     if (saved) {
@@ -175,6 +181,35 @@ export default function RideSelectPage() {
 
   const selectedRide = rideOptions.find((r) => r.id === selected)
   const selectedPrice = getPrice(selected)
+
+  // Handle drag gestures
+  const handleDragStart = (clientY: number) => {
+    setIsDragging(true)
+    setDragStartY(clientY)
+    setDragCurrentY(clientY)
+  }
+
+  const handleDragMove = (clientY: number) => {
+    if (isDragging) {
+      setDragCurrentY(clientY)
+    }
+  }
+
+  const handleDragEnd = () => {
+    if (isDragging) {
+      // If dragged down more than 100px, expand the map
+      if (dragOffset > 100) {
+        setMapExpanded(true)
+      }
+      // If dragged up more than 100px, collapse the map
+      else if (dragOffset < -100 && mapExpanded) {
+        setMapExpanded(false)
+      }
+      setIsDragging(false)
+      setDragStartY(0)
+      setDragCurrentY(0)
+    }
+  }
 
   return (
     <div className="h-dvh bg-neutral-50 flex flex-col overflow-hidden">
@@ -285,10 +320,24 @@ export default function RideSelectPage() {
       </div>
 
       {/* Conteudo principal - cards de veiculo com scroll infinito */}
-      <div className="flex-1 flex flex-col min-h-0 bg-white rounded-t-[24px] -mt-4 relative z-10 shadow-[0_-4px_20px_rgba(0,0,0,0.06)]">
-        {/* Handle decorativo */}
-        <div className="flex justify-center pt-2.5 pb-1">
-          <div className="w-9 h-1 bg-neutral-200 rounded-full" />
+      <div 
+        className="flex-1 flex flex-col min-h-0 bg-white rounded-t-[24px] -mt-4 relative z-10 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] transition-transform"
+        style={{
+          transform: isDragging ? `translateY(${Math.max(0, dragOffset)}px)` : 'none',
+        }}
+      >
+        {/* Handle decorativo - DRAGGABLE */}
+        <div 
+          className="flex justify-center pt-2.5 pb-1 cursor-grab active:cursor-grabbing"
+          onTouchStart={(e) => handleDragStart(e.touches[0].clientY)}
+          onTouchMove={(e) => handleDragMove(e.touches[0].clientY)}
+          onTouchEnd={handleDragEnd}
+          onMouseDown={(e) => handleDragStart(e.clientY)}
+          onMouseMove={(e) => handleDragMove(e.clientY)}
+          onMouseUp={handleDragEnd}
+          onMouseLeave={handleDragEnd}
+        >
+          <div className={`w-9 h-1 rounded-full transition-colors ${isDragging ? 'bg-neutral-400' : 'bg-neutral-200'}`} />
         </div>
 
         {/* Titulo da secao */}
